@@ -1,0 +1,27 @@
+body{
+    background-color: lightblue;
+}
+
+
+/* Completed Todo */
+[done]{
+    color: green;
+    text-decoration: line-through;
+}
+
+[priority]{
+    color: red;
+    background-color: aquamarine;
+}
+#deleteList{
+    list-style-type: square;
+}
+
+/* Deleted Todo */
+.deleted_todo{
+    display: none;
+}
+
+.show_todo{
+    display: inline;
+}
