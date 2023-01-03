@@ -64,19 +64,12 @@ function sortByPriority() {
         return 1;
       }
       // If both a and b have the "priority" class or neither has it, their order should not change
+      console.log(a)
       return 0;
     });
   
     // Remove all of the to-do items from the list
-    todoItems.forEach(item => item.remove());
-    console.log('hello world')
-  
-    // Add the sorted to-do items back to the list, with the prioritized items at the top
-    const nonPrioritizedItems = sortedItems.filter(item => !item.classList.contains('priority'));
-    const prioritizedItems = sortedItems.filter(item => item.classList.contains('priority'));
-    console.log(item)
-    prioritizedItems.forEach(item => todoList.appendChild(item));
-    nonPrioritizedItems.forEach(item => todoList.appendChild(item));
+    
   }
 
 
