@@ -6,7 +6,7 @@ const deleteList=document.querySelector('#deleteList')
 const removeButton=document.querySelector('#removeButton')
 const loadButton = document.querySelector('#loadButton')
 
-'sadsadsa'
+
 // Event Listener: Add Todo Button
 addButton.addEventListener('click',addTodo)
 let nextId= 0
@@ -19,20 +19,32 @@ function addTodo(){
     const newTodo=`
     <li id="${id}">
     <span>${item}</span>
-    <button onclick="completeTodo(${id})">Complete</button>
+    <button onclick="completeTodo(${id},'${item}')">Complete</button>
     <button onclick="priotize(${id})">Priotize</button>
     <button onclick="deleteTodo(${id})">Delete</button>
+    <button onclick="objects(${id}'${item}')">Object</button>
     </li>`
 
     //append the new node
     
     todoList.insertAdjacentHTML('beforeend',newTodo)
     localStorage.setItem('todoArray', todoList.innerHTML)
+    return item
 }
+
+//change into object
+function objects(id,item){
+    console.log(item)
+    console.log(id)
+    const object={ID:id,ITEM:item}
+    console.log(object.ITEM)   
+}
+
 
 
 // Feature: Complete Todo
 function completeTodo(id){
+    
     const todoItem= document.querySelector(`li[id="${id}"]`)
     itemSpan=todoItem.children[0]
     itemSpan.toggleAttribute('done')
@@ -42,35 +54,13 @@ function completeTodo(id){
 }
 
 function priotize(id){
+    console.log(id)
     const todoItem =document.querySelector(`li[id="${id}"]`)
     todoItem.toggleAttribute('priority')
     const prioStatus=todoItem.classList.contains('priority')
     const priobutton=todoItem.children[2]
-    priobutton.innerText=prioStatus?'Undo':'prioritize'
-    
+    priobutton.innerText=prioStatus?'Undo':'prioritize'   
 }
-function sortByPriority() {
-    // Get all of the to-do items in the list
-    const todoItems = todoList.querySelectorAll('li');
-    console.log(todoItems) 
-    // Sort the to-do items in order of priority
-    const sortedItems = [...todoItems].sort((a, b) => {
-      // If a has the "priority" class and b does not, a should come first
-      if (a.classList.contains('priority') && !b.classList.contains('priority')) {
-        return -1;
-      }
-      // If b has the "priority" class and a does not, b should come first
-      if (b.classList.contains('priority') && !a.classList.contains('priority')) {
-        return 1;
-      }
-      // If both a and b have the "priority" class or neither has it, their order should not change
-      console.log(a)
-      return 0;
-    });
-  
-    // Remove all of the to-do items from the list
-    
-  }
 
 
 function deleteTodo(id){
