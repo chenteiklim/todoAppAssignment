@@ -40,14 +40,11 @@ body{
     padding: 20px;
 }
 
-#rating{
-    padding-left: 80px;
+.priotize{
     width: 20px;
-    
 }
 
-
-.clicked {
+.priotize.color {
     fill: blue;
   }
   
