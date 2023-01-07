@@ -52,6 +52,7 @@ function displayAddTodo(){
 
 
 function createTodoItem(ID,items,svgClasses){
+     
     console.log(todoListArray)
     if (!items){return}  
     const newTodo=`
@@ -115,11 +116,9 @@ function completeTodo(id){
 
 
 function deleteTodo(id){
-    const li =document.querySelector(`li[id="${id}"]`)
-    console.log(li)
+    const li= document.querySelector(`li[id="${id}"]`)
     todoList.removeChild(li);
 }
-
 
 // Feature: Delete Todo
 function removeAll(){
@@ -132,12 +131,9 @@ function removeAll(){
         child = todoList.lastElementChild;
     }
 }
-
+  
 function undoDelete() {
-    var storedValue = localStorage.getItem('todoArray');
-    if(storedValue) {
-        todoList.innerHTML = storedValue;
-    }
+    displayAddTodo()
 }
 
 

@@ -4,6 +4,7 @@ body{
 
 
 #todoForm{
+    margin-top: 60px;
     margin-left: 20px;
 }
 
@@ -17,23 +18,15 @@ body{
     text-decoration: line-through;
 }
 
-#deleteList{
-    list-style-type: square;
-}
-
 /* Deleted Todo */
 .deleted_todo{
     display: none;
 }
 
-.show_todo{
-    display: inline;
-}
 
 .todo-item{
     display: flex;
     column-gap: 20px;
-    
     list-style-type: none;
     margin-top: 20px;
     background: lightgrey;
@@ -47,8 +40,14 @@ body{
 .color {
     fill: blue;
   }
-  
-  
+#todoForm{
+    margin-top: 40px;
+}
+#reminder{
+    font-size: 18px;
+    margin-left: 20px;
+}
+
   
   
 
