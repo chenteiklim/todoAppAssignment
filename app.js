@@ -5,15 +5,13 @@ const addButton=document.querySelector('#addButton')
 const deleteList=document.querySelector('#deleteList')
 const removeButton=document.querySelector('#removeButton')
 const loadButton = document.querySelector('#loadButton')
-const displayButton= document.querySelector('#displayButton')
-console.log(todoList)
 
 const todoListArray= []
 
 
 // Event Listener: Add Todo Button
 addButton.addEventListener('click',addTodo)
-displayButton.addEventListener('click',displayAddTodo)
+
 
 function displayAddTodo(){
    
@@ -97,11 +95,10 @@ function addTodo(){
         priority
     })
     
-    console.log(todoListArray)
-    console.log(id)
+    
     const todoString=JSON.stringify(todoListArray)
     localStorage.setItem('todoArray2', todoString)
-
+    displayAddTodo()
     }
    
 
