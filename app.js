@@ -1,12 +1,12 @@
 // Select DOM Elements
 const todoInput=document.querySelector('#todoInput')
-const todoListElement=document.querySelector('#todoList')
+const todoList=document.querySelector('#todoList')
 const addButton=document.querySelector('#addButton')
 const deleteList=document.querySelector('#deleteList')
 const removeButton=document.querySelector('#removeButton')
 const loadButton = document.querySelector('#loadButton')
 const displayButton= document.querySelector('#displayButton')
-
+console.log(todoList)
 
 const todoListArray= []
 
@@ -16,43 +16,75 @@ addButton.addEventListener('click',addTodo)
 displayButton.addEventListener('click',displayAddTodo)
 
 function displayAddTodo(){
+   
     var storedValue = localStorage.getItem('todoArray2');
     const storedData=JSON.parse(storedValue)
+    console.log(todoListArray)
     // Get the index of the object that we want to access
     
-    for (index=0; index<storedData.length; index++){
-        let ID=storedData[index].id
-        priority= storedData[index.priority]
-        // Access the item property of the object at the specified index
-        const items = storedData[index].item;
-  
+    const prioritizedItems = [];
+    const nonPrioritizedItems = [];
 
+    for (index=0; index<storedData.length; index++){        
+        let priority= storedData[index].priority
+        let ID = storedData[index].id;
+        // Access the item property of the object at the specified index
+        let items = storedData[index].item;
+        svgClasses = ""
+        if (priority === true){
+            svgClasses= 'color'
+            prioritizedItems.push({ID,items,svgClasses});
+        }
+        else {
+            nonPrioritizedItems.push({ID,items,svgClasses})
+        }  
+        removeAll()
+        // Insert the prioritized items into the list first
+        for (const {ID, items, svgClasses } of prioritizedItems) {
+            createTodoItem(ID,items,svgClasses);
+        }
+
+        // Then insert the non-prioritized items
+        for (const {ID, items, svgClasses} of nonPrioritizedItems) {
+            createTodoItem(ID,items,svgClasses);
+        }
+    }
+}
+
+
+function createTodoItem(ID,items,svgClasses){
+    console.log(todoListArray)
     if (!items){return}  
     const newTodo=`
     <li id="${ID}" class='todo-item'>
     <span>${items}</span>
     <button onclick="completeTodo(${ID},'${items}')">Complete</button>
     <button onclick="deleteTodo(${ID})">Delete</button>
-    <svg id=(${ID}) class='priotize' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+    <svg id= "button-${ID}" class='priotize ${svgClasses}' onclick='priotize(${ID})'  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
     <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
     </svg>
-
-   `
+    `
     //append the new node/append the new node
-    
     todoList.insertAdjacentHTML('beforeend',newTodo)
-    const image=document.querySelector('.priotize')
-    console.log(image)
-    image.addEventListener('click', function() {
-   
-        image.classList.toggle('color');
-      })
-    }  
-
+    console.log(todoList)
+    
 }
+    
 
-
-
+   
+function priotize(ID){
+    
+    if (todoListArray[ID].priority === true){
+        todoListArray[ID].priority = false
+    }
+    else{
+        todoListArray[ID].priority = true
+    }
+    const todoString=JSON.stringify(todoListArray)
+    localStorage.setItem('todoArray2', todoString)
+    displayAddTodo()
+}
+ 
 
 
 function addTodo(){
@@ -73,14 +105,6 @@ function addTodo(){
     }
    
 
-
-//change into object
-function objects(id,item){
-    console.log(item)
-    console.log(id)
-    const object={ID:id,ITEM:item} 
-    console.log(document.getElementById(id))
-}
 
 
 function get() {
@@ -117,8 +141,8 @@ function deleteTodo(id){
 
 // Feature: Delete Todo
 function removeAll(){
-    localStorage.setItem('todoArray', todoList.innerHTML);
-    console.log(todoList)
+    /* localStorage.setItem('todoArray2', todoList.innerHTML);
+    console.log(todoList) */
     var child = todoList.lastElementChild; 
     while (child) {
         todoList.removeChild(child);
@@ -127,7 +151,7 @@ function removeAll(){
 }
 
 function undoDelete() {
-    var storedValue = localStorage.getItem('todoArray');
+    var storedValue = localStorage.getItem('todoArray2');
     if(storedValue) {
         todoList.innerHTML = storedValue;
     }
@@ -135,5 +159,5 @@ function undoDelete() {
 
 
 function clearData(){
-    localStorage.clear();
+    localStorage.setItem('todoArray2',JSON.stringify([]));    
 }
