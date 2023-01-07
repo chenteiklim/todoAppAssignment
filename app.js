@@ -6,17 +6,18 @@ const deleteList=document.querySelector('#deleteList')
 const removeButton=document.querySelector('#removeButton')
 const loadButton = document.querySelector('#loadButton')
 
-const todoListArray= []
-
+let todoListArray= []
+console.log(todoListArray)
 
 // Event Listener: Add Todo Button
 addButton.addEventListener('click',addTodo)
-
+window.addEventListener('load', displayAddTodo);
 
 function displayAddTodo(){
-   
-    var storedValue = localStorage.getItem('todoArray2');
-    const storedData=JSON.parse(storedValue)
+    
+    var storedValue = localStorage.getItem('todoArray');
+    storedData=JSON.parse(storedValue)
+    todoListArray = [...storedData];
     console.log(todoListArray)
     // Get the index of the object that we want to access
     
@@ -79,7 +80,7 @@ function priotize(ID){
         todoListArray[ID].priority = true
     }
     const todoString=JSON.stringify(todoListArray)
-    localStorage.setItem('todoArray2', todoString)
+    localStorage.setItem('todoArray', todoString)
     displayAddTodo()
 }
  
@@ -97,26 +98,9 @@ function addTodo(){
     
     
     const todoString=JSON.stringify(todoListArray)
-    localStorage.setItem('todoArray2', todoString)
+    localStorage.setItem('todoArray', todoString)
     displayAddTodo()
     }
-   
-
-
-
-function get() {
-    var storedValue = localStorage.getItem('todoArray2');
-    const storedData=JSON.parse(storedValue)
-    if(storedData) {
-        console.log(storedData[0].item)
-    }
-}
-
-function init(){
-    get()
-}
-
-
 
 // Feature: Complete Todo
 function completeTodo(id){
@@ -132,6 +116,7 @@ function completeTodo(id){
 
 function deleteTodo(id){
     const li =document.querySelector(`li[id="${id}"]`)
+    console.log(li)
     todoList.removeChild(li);
 }
 
@@ -141,6 +126,7 @@ function removeAll(){
     /* localStorage.setItem('todoArray2', todoList.innerHTML);
     console.log(todoList) */
     var child = todoList.lastElementChild; 
+    console.log(child)
     while (child) {
         todoList.removeChild(child);
         child = todoList.lastElementChild;
@@ -148,7 +134,7 @@ function removeAll(){
 }
 
 function undoDelete() {
-    var storedValue = localStorage.getItem('todoArray2');
+    var storedValue = localStorage.getItem('todoArray');
     if(storedValue) {
         todoList.innerHTML = storedValue;
     }
@@ -156,5 +142,5 @@ function undoDelete() {
 
 
 function clearData(){
-    localStorage.setItem('todoArray2',JSON.stringify([]));    
+    localStorage.setItem('todoArray',JSON.stringify([]));    
 }
